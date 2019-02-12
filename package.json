@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/sayaradz/sayaradz_backend/issues"
   },
-  "homepage": "https://github.com/sayaradz/sayaradz_backend#readme"
+  "homepage": "https://github.com/sayaradz/sayaradz_backend#readme",
+  "dependencies": {
+    "mocha": "^5.2.0"
+  }
 }
