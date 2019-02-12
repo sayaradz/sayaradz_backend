@@ -1,18 +1,22 @@
 language: node_js
 node_js:
-  - v6
+- v6
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - gcc-4.8
-      - g++-4.8
+    - gcc-4.8
+    - g++-4.8
 script:
-  - npm test -- -i --coverage
+- npm test -- -i --coverage
 env:
   global:
-    - CXX=g++-4.8
-    - SENDGRID_KEY=sendgridKey
-    - MASTER_KEY=masterKey
-    - JWT_SECRET=jwtSecret
+  - CXX=g++-4.8
+  - SENDGRID_KEY=sendgridKey
+  - MASTER_KEY=masterKey
+  - JWT_SECRET=jwtSecret
+deploy:
+  provider: heroku
+  api_key:
+    secure: W1hN1BVnoXD6/l3jCI//XxoKTNpfBnxHhEButD8JxJwHUDwyOOsJOfeZLNFMRALv1AZvznKA3qxOR4zW+nV8CzslbcCGUgCB5S9y/j0d6eqhuhfKXbQlL0m4YJgtpGQ0yr7vHU5subzdtpcQqFJ9zDKtZQNkPhMKmVxo/KjeP52bcI48onIm3UBvMko7ZvheQNaDemFSiCB4Az7+h61SGTaJMssPecyq9bTjEBmNJ5lFCIbgttlXVEtaKt6mOf2BLAgr0Krg+X65EqwTxakNiJwgSTT/mq+EO2qzlzgC763SQqOtQMTk8G6le+OXPosaZyRrRrWHC3QqDQamTyo8GHzKqMU8TT7jmsJaTd+LANgIGOoC2r+Dr8YcUy1iO8C6TVLIPCtjSeKbYbexHWuR3CtQsA1lMXeclhOp5hFDV1z/X0XLeKb9dLLqAzCYhwA0Uqfc/BTjaNTm8FeWrYAmjTBycxv2mE/kXfJnvgEznNa+2egPByInZ5gPfiHyJplBxuwcq00YlFNeR+UtvDNydjUTdlhkGlQTL5Es3aaURXZx60sI0nTE+Nq+DR7VZi2BPqj+Ydg/PQo8m/tVKXgfICATEIfZm4MBLzC6wKJGd/YQEtFSM8oIM+kX/uVgTWLHcFzs+GQh9FUXA8nQmmcLFXM36L1gZHo6hiu7g3hLHPg=
