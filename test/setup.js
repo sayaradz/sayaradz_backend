@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events'
+/*import { EventEmitter } from 'events'
 import MongodbMemoryServer from 'mongodb-memory-server'
 import mongoose from '../src/services/mongoose'
 
@@ -26,7 +26,7 @@ let mongoServer
 beforeAll(async () => {
   mongoServer = new MongodbMemoryServer()
   const mongoUri = await mongoServer.getConnectionString()
-  await mongoose.connect(mongoUri, (err) => {
+  await mongoose.connect(mongoUri, err => {
     if (err) console.error(err)
   })
 })
@@ -39,8 +39,9 @@ afterAll(async () => {
 afterEach(async () => {
   const { collections } = mongoose.connection
   const promises = []
-  Object.keys(collections).forEach((collection) => {
+  Object.keys(collections).forEach(collection => {
     promises.push(collections[collection].remove())
   })
   await Promise.all(promises)
 })
+*/

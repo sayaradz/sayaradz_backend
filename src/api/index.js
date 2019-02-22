@@ -1,7 +1,5 @@
 import { Router } from 'express'
-import user from './user'
-import auth from './auth'
-import passwordReset from './password-reset'
+import Brand from './brand'
 
 const router = new Router()
 
@@ -28,8 +26,10 @@ const router = new Router()
  * @apiParam {String[]} [sort=-createdAt] Order of returned items.
  * @apiParam {String[]} [fields] Fields to be returned.
  */
-router.use('/users', user)
-router.use('/auth', auth)
+
+/*router.use('/users', user)
 router.use('/password-resets', passwordReset)
+router.use('/auth', auth)*/
+router.use('/brands', Brand)
 
 export default router
