@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "start": "node .",
-    "test": "jest src/api/brand",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
     "dev": "nodemon -i \"*.test.js\" .",
