@@ -24,16 +24,16 @@ export const create = ({ bodymen: { body } }, res, next) =>
       next(err)
     })
 
-export const update = ({ bodymen: { body }, params, user }, res, next) =>
+export const update = ({ bodymen: { body }, params, brand }, res, next) =>
   Brand.findById(params.id)
     .then(notFound(res))
-    .then(user => (user ? Object.assign(user, body).save() : null))
+    .then(brand => (brand ? Object.assign(brand, body).save() : null))
     .then(success(res))
     .catch(next)
 
 export const destroy = ({ params }, res, next) =>
   Brand.findById(params.id)
     .then(notFound(res))
-    .then(user => (user ? user.remove() : null))
+    .then(brand => (brand ? brand.remove() : null))
     .then(success(res, 204))
     .catch(next)
