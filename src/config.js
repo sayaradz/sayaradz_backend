@@ -3,7 +3,7 @@ import path from 'path'
 import merge from 'lodash/merge'
 
 /* istanbul ignore next */
-const requireProcessEnv = name => {
+const requireProcessEnv = (name) => {
   if (!process.env[name]) {
     throw new Error('You must set the ' + name + ' environment variable')
   }
@@ -23,8 +23,8 @@ const config = {
   all: {
     env: process.env.NODE_ENV || 'development',
     root: path.join(__dirname, '..'),
-    port: process.env.PORT || 3026,
-    ip: process.env.IP || 'localhost',
+    port: process.env.PORT || 9000,
+    ip: process.env.IP || '0.0.0.0',
     apiRoot: process.env.API_ROOT || '',
     defaultEmail: 'no-reply@sayara-backend.com',
     sendgridKey: requireProcessEnv('SENDGRID_KEY'),
@@ -38,7 +38,7 @@ const config = {
       }
     }
   },
-  test: {},
+  test: { },
   development: {
     mongo: {
       uri: 'mongodb://localhost/sayara-backend-dev',
