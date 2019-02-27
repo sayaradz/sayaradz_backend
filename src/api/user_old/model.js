@@ -42,10 +42,12 @@ const userSchema = new Schema(
   }
 )
 
-/*
-userSchema.path('email').set(function (email) {
+userSchema.path('email').set(function(email) {
   if (!this.picture || this.picture.indexOf('https://gravatar.com') === 0) {
-    const hash = crypto.createHash('md5').update(email).digest('hex')
+    const hash = crypto
+      .createHash('md5')
+      .update(email)
+      .digest('hex')
     this.picture = `https://gravatar.com/avatar/${hash}?d=identicon`
   }
 
@@ -56,19 +58,23 @@ userSchema.path('email').set(function (email) {
   return email
 })
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function(next) {
   if (!this.isModified('password')) return next()
 
+  /* istanbul ignore next */
   const rounds = env === 'test' ? 1 : 9
 
-  bcrypt.hash(this.password, rounds).then((hash) => {
-    this.password = hash
-    next()
-  }).catch(next)
+  bcrypt
+    .hash(this.password, rounds)
+    .then(hash => {
+      this.password = hash
+      next()
+    })
+    .catch(next)
 })
 
 userSchema.methods = {
-  view (full) {
+  view(full) {
     let view = {}
     let fields = ['id', 'name', 'picture']
 
@@ -76,21 +82,27 @@ userSchema.methods = {
       fields = [...fields, 'email', 'createdAt']
     }
 
-    fields.forEach((field) => { view[field] = this[field] })
+    fields.forEach(field => {
+      view[field] = this[field]
+    })
 
     return view
   },
 
-  authenticate (password) {
-    return bcrypt.compare(password, this.password).then((valid) => valid ? this : false)
+  authenticate(password) {
+    return bcrypt
+      .compare(password, this.password)
+      .then(valid => (valid ? this : false))
   }
 }
 
 userSchema.statics = {
   roles,
 
-  createFromService ({ service, id, email, name, picture }) {
-    return this.findOne({ $or: [{ [`services.${service}`]: id }, { email }] }).then((user) => {
+  createFromService({ service, id, email, name, picture }) {
+    return this.findOne({
+      $or: [{ [`services.${service}`]: id }, { email }]
+    }).then(user => {
       if (user) {
         user.services[service] = id
         user.name = name
@@ -98,14 +110,20 @@ userSchema.statics = {
         return user.save()
       } else {
         const password = randtoken.generate(16)
-        return this.create({ services: { [service]: id }, email, password, name, picture })
+        return this.create({
+          services: { [service]: id },
+          email,
+          password,
+          name,
+          picture
+        })
       }
     })
   }
 }
 
 userSchema.plugin(mongooseKeywords, { paths: ['email', 'name'] })
-*/
+
 const model = mongoose.model('User', userSchema)
 
 export const schema = model.schema

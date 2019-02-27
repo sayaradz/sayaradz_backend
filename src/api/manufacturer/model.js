@@ -6,7 +6,13 @@ const Manufacturer = new Schema(
       type: String,
       required: true,
       trim: true
-    }
+    },
+    brands: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'brands'
+      }
+    ]
   },
   {
     timestamps: true
