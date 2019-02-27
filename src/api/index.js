@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import Brand from './brand'
-
+import Auth from './auth'
+import User from './user'
 const router = new Router()
 
 /**
@@ -27,9 +28,10 @@ const router = new Router()
  * @apiParam {String[]} [fields] Fields to be returned.
  */
 
-/*router.use('/users', user)
-router.use('/password-resets', passwordReset)
-router.use('/auth', auth)*/
+/*router.use('/password-resets', passwordReset)*/
+
+router.use('/users', User)
+router.use('/auth', Auth)
 router.use('/brands', Brand)
 
 export default router
