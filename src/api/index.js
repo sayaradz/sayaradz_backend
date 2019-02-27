@@ -2,6 +2,8 @@ import { Router } from 'express'
 import Brand from './brand'
 import Auth from './auth'
 import User from './user'
+import Model from './model'
+import Manufacturer from './manufacturer'
 const router = new Router()
 
 /**
@@ -33,5 +35,7 @@ const router = new Router()
 router.use('/users', User)
 router.use('/auth', Auth)
 router.use('/brands', Brand)
+router.use('/manufacturers', Manufacturer)
+router.use('/models', Model)
 
 export default router
