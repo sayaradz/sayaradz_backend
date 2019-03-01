@@ -6,3 +6,5 @@ export const signin = ({ user }, res, next) =>
     .then(token => ({ token, user }))
     .then(success(res, 201))
     .catch(next)
+
+export const checkToken = (req, res, next) => res.sendStatus(200)
