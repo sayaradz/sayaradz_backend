@@ -6,7 +6,7 @@ import routes, { User } from '.'
 
 const app = () => express(apiRoot, routes)
 
-let user1, user2, admin, session1, session2, adminSession
+/*let user1, user2, admin, session1, session2, adminSession
 
 beforeEach(async () => {
   user1 = await User.create({ name: 'user', email: 'a@a.com', password: '123456' })
@@ -396,3 +396,4 @@ test('DELETE /users/:id 404 (admin)', async () => {
     .send({ access_token: adminSession })
   expect(status).toBe(404)
 })
+*/

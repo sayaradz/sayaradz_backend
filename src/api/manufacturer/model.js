@@ -19,7 +19,7 @@ const Manufacturer = new Schema(
   }
 )
 
-const ManufacturerModel = mongoose.model('options', Manufacturer)
+const ManufacturerModel = mongoose.model('manufacturers', Manufacturer)
 
 export const ManufacturerSchema = ManufacturerModel.schema
 export default ManufacturerModel
