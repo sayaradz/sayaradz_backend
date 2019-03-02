@@ -6,15 +6,15 @@ import { list, read, create, update, destroy } from './controller'
 import { BrandSchema } from './model'
 
 const router = new Router()
-const { code, name } = BrandSchema.tree
+const { code, name, logo } = BrandSchema.tree
 
 router.get('/', query(), list)
 
 router.get('/:id', read)
 
-router.post('/', body({ code, name }), create)
+router.post('/', body({ code, name, logo }), create)
 
-router.put('/:id', body({ code, name }), update)
+router.put('/:id', body({ code, name, logo }), update)
 
 router.delete('/:id', destroy)
 
