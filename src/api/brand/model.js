@@ -13,6 +13,9 @@ const Brand = new Schema(
       required: true,
       trim: true
     },
+    logo: {
+      type: String
+    },
     models: [{ type: Schema.Types.ObjectId, ref: 'model' }]
   },
   {
