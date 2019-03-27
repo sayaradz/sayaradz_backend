@@ -11,5 +11,5 @@ router.post('/signin', local(), signin)
 router.get('/checkToken', token({ required: true }), checkToken)
 //router.post('/', master(), password(), login)
 //router.post('/google', google(), login)
-
+//
 export default router
