@@ -25,7 +25,7 @@ const Version = new Schema(
   }
 )
 
-const ModelModel = mongoose.model('models', Version)
+const VersionModel = mongoose.model('versions', Version)
 
-export const ModelSchema = ModelModel.schema
-export default ModelModel
+export const VersionSchema = VersionModel.schema
+export default VersionModel

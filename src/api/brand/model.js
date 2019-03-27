@@ -16,7 +16,7 @@ const Brand = new Schema(
     logo: {
       type: String
     },
-    models: [{ type: Schema.Types.ObjectId, ref: 'model' }]
+    models: [{ type: Schema.Types.ObjectId, ref: 'models' }]
   },
   {
     timestamps: true

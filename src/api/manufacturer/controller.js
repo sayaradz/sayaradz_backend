@@ -4,16 +4,19 @@ import Manufacturer from './model'
 export const list = ({ querymen: { query, select, cursor } }, res, next) =>
   Manufacturer.count(query)
     .then(count =>
-      Manufacturer.find(query, select, cursor).then(manufacturers => ({
-        rows: manufacturers,
-        count
-      }))
+      Manufacturer.find(query, select, cursor)
+        .populate('brands')
+        .then(manufacturers => ({
+          rows: manufacturers,
+          count
+        }))
     )
     .then(success(res))
     .catch(next)
 
 export const read = ({ params }, res, next) =>
   Manufacturer.findById(params.id)
+    .populate('brands')
     .then(success(res))
     .catch(next)
 

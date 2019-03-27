@@ -13,6 +13,7 @@ test('POST /manufacturers 201', async () => {
   expect(status).toBe(201)
   expect(typeof data).toBe('object')
   expect(typeof data.name).toBe('string')
+  expect(data.name).toBe('Manufacturer1')
 })
 
 test('POST /manufacturers 201', async () => {
@@ -56,6 +57,7 @@ test('PUT /manufacturers/:id 200', async () => {
   manufacturer1 = data
 })
 
+/*
 test('DELETE /manufacturers/:id 204 (admin)', async () => {
   const { status } = await Axios.delete(
     `${BACKEND_URL}/manufacturers/${manufacturer1._id}`
@@ -69,3 +71,4 @@ test('DELETE /manufacturers/:id 204 (admin)', async () => {
   )
   expect(status).toBe(204)
 })
+*/

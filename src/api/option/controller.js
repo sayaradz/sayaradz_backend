@@ -1,13 +1,14 @@
 import { success, notFound } from '../../services/response/'
-import Brand from './model'
+import Model from './model'
 
 export const list = ({ querymen: { query, select, cursor } }, res, next) =>
-  Brand.count(query)
+  Model.count(query)
     .then(count =>
-      Brand.find(query, select, cursor)
-        .populate('models')
-        .then(brands => ({
-          rows: brands,
+      Model.find(query, select, cursor)
+        .populate('options')
+        .populate('colors')
+        .then(options => ({
+          rows: options,
           count
         }))
     )
@@ -15,28 +16,29 @@ export const list = ({ querymen: { query, select, cursor } }, res, next) =>
     .catch(next)
 
 export const read = ({ params }, res, next) =>
-  Brand.findById(params.id)
-    .populate('models')
+  Model.findById(params.id)
+    .populate('options')
+    .populate('colors')
     .then(success(res))
     .catch(next)
 
 export const create = ({ bodymen: { body } }, res, next) =>
-  Brand.create(body)
+  Model.create(body)
     .then(success(res, 201))
     .catch(err => {
       next(err)
     })
 
-export const update = ({ bodymen: { body }, params, brand }, res, next) =>
-  Brand.findById(params.id)
+export const update = ({ bodymen: { body }, params, model }, res, next) =>
+  Model.findById(params.id)
     .then(notFound(res))
-    .then(brand => (brand ? Object.assign(brand, body).save() : null))
+    .then(option => (option ? Object.assign(option, body).save() : null))
     .then(success(res))
     .catch(next)
 
 export const destroy = ({ params }, res, next) =>
-  Brand.findById(params.id)
+  Model.findById(params.id)
     .then(notFound(res))
-    .then(brand => (brand ? brand.remove() : null))
+    .then(option => (option ? option.remove() : null))
     .then(success(res, 204))
     .catch(next)

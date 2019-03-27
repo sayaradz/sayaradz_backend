@@ -4,6 +4,8 @@ import Auth from './auth'
 import User from './user'
 import Model from './model'
 import Manufacturer from './manufacturer'
+import Version from './version'
+import Option from './option'
 const router = new Router()
 
 /**
@@ -37,5 +39,7 @@ router.use('/auth', Auth)
 router.use('/brands', Brand)
 router.use('/manufacturers', Manufacturer)
 router.use('/models', Model)
+router.use('/versions', Version)
+router.use('/options', Option)
 
 export default router

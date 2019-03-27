@@ -4,16 +4,19 @@ import Model from './model'
 export const list = ({ querymen: { query, select, cursor } }, res, next) =>
   Model.count(query)
     .then(count =>
-      Model.find(query, select, cursor).then(models => ({
-        rows: models,
-        count
-      }))
+      Model.find(query, select, cursor)
+        .populate('versions')
+        .then(models => ({
+          rows: models,
+          count
+        }))
     )
     .then(success(res))
     .catch(next)
 
 export const read = ({ params }, res, next) =>
   Model.findById(params.id)
+    .populate('versions')
     .then(success(res))
     .catch(next)
 
