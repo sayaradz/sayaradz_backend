@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 
-const Model = new Schema(
+const Vehicle = new Schema(
   {
     chassis_number: {
       type: Number,
@@ -25,7 +25,7 @@ const Model = new Schema(
   }
 )
 
-const ModelModel = mongoose.model('models', Model)
+const VehicleModel = mongoose.model('vehicle', Vehicle)
 
-export const ModelSchema = ModelModel.schema
-export default ModelModel
+export const VehicleSchema = VehicleModel.schema
+export default VehicleModel

@@ -6,6 +6,8 @@ import Model from './model'
 import Manufacturer from './manufacturer'
 import Version from './version'
 import Option from './option'
+import Vehicle from './vehicle'
+
 const router = new Router()
 
 /**
@@ -41,5 +43,6 @@ router.use('/manufacturers', Manufacturer)
 router.use('/models', Model)
 router.use('/versions', Version)
 router.use('/options', Option)
+router.use('/vehicles', Vehicle)
 
 export default router
