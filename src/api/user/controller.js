@@ -43,6 +43,29 @@ export const create = ({ bodymen: { body } }, res, next) => {
     })
 }
 
+export const addManufacturer = (req, res, next) => {
+  const { manufacturer_id } = req.body
+  const { id } = req.params
+  User.findByIdAndUpdate(
+    id,
+    {
+      $push: { manufacturers_access: manufacturer_id }
+    },
+    { new: true }
+  )
+    .then(success(res, 201))
+    .catch(err => {
+      next(err)
+    })
+}
+
+export const removeManufacturer = ({ params }, res, next) =>
+  User.findByIdAndUpdate(params.id, {
+    $pull: { manufacturers_access: params.manufacturer_id }
+  })
+    .then(success(res, 204))
+    .catch(next)
+
 export const update = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)
     .then(notFound(res))

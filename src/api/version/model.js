@@ -14,10 +14,12 @@ const Version = new Schema(
       required: true,
       trim: true
     },
-    options: {
-      type: Schema.Types.ObjectId,
-      ref: 'options'
-    },
+    options: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'options'
+      }
+    ],
     colors: [{ type: Schema.Types.ObjectId, ref: 'colors' }]
   },
   {

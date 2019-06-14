@@ -11,6 +11,8 @@ import {
   showMe,
   show,
   create,
+  addManufacturer,
+  removeManufacturer,
   update,
   updatePassword,
   destroy
@@ -29,6 +31,10 @@ router.get('/:id', show)
 */
 
 router.post('/', body({ email, password, name, picture, role }), create)
+
+router.post('/:id/manufacturers', addManufacturer)
+
+router.delete('/:id/manufacturers/:manufacturer_id', removeManufacturer)
 
 /*
 router.put('/:id', token({ required: true }), body({ name, picture }), update)

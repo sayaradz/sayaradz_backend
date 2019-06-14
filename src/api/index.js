@@ -5,6 +5,7 @@ import User from './user'
 import Model from './model'
 import Manufacturer from './manufacturer'
 import Version from './version'
+import Color from './color'
 import Option from './option'
 import Vehicle from './vehicle'
 
@@ -42,6 +43,7 @@ router.use('/brands', Brand)
 router.use('/manufacturers', Manufacturer)
 router.use('/models', Model)
 router.use('/versions', Version)
+router.use('/colors', Color)
 router.use('/options', Option)
 router.use('/vehicles', Vehicle)
 

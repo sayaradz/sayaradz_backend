@@ -35,7 +35,13 @@ const userSchema = new Schema(
     picture: {
       type: String,
       trim: true
-    }
+    },
+    manufacturers_access: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'manufacturers'
+      }
+    ]
   },
   {
     timestamps: true

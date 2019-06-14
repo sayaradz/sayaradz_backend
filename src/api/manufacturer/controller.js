@@ -27,6 +27,29 @@ export const create = ({ bodymen: { body } }, res, next) =>
       next(err)
     })
 
+export const addBrand = (req, res, next) => {
+  const { brand_id } = req.body
+  const { id } = req.params
+  Manufacturer.findByIdAndUpdate(
+    id,
+    {
+      $push: { brands: brand_id }
+    },
+    { new: true }
+  )
+    .then(success(res, 201))
+    .catch(err => {
+      next(err)
+    })
+}
+
+export const removeBrand = ({ params }, res, next) =>
+  Manufacturer.findByIdAndUpdate(params.id, {
+    $pull: { brands: params.brand_id }
+  })
+    .then(success(res, 204))
+    .catch(next)
+
 export const update = (
   { bodymen: { body }, params, manufacturer },
   res,
