@@ -8,6 +8,7 @@ import Version from './version'
 import Color from './color'
 import Option from './option'
 import Vehicle from './vehicle'
+import TariffLine from './tariff_line'
 
 const router = new Router()
 
@@ -46,5 +47,6 @@ router.use('/versions', Version)
 router.use('/colors', Color)
 router.use('/options', Option)
 router.use('/vehicles', Vehicle)
+router.use('/tarifflines', TariffLine)
 
 export default router
