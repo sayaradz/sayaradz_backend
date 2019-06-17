@@ -5,7 +5,7 @@ export const list = ({ querymen: { query, select, cursor } }, res, next) =>
   Brand.count(query)
     .then(count =>
       Brand.find(query, select, cursor)
-        .populate('models')
+        .populate({ path: 'models', select: '-versions' })
         .then(brands => ({
           rows: brands,
           count
@@ -16,7 +16,7 @@ export const list = ({ querymen: { query, select, cursor } }, res, next) =>
 
 export const read = ({ params }, res, next) =>
   Brand.findById(params.id)
-    .populate('models')
+    .populate({ path: 'models', select: '-versions' })
     .then(success(res))
     .catch(next)
 
