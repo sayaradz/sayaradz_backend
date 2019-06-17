@@ -14,13 +14,13 @@ import {
 import { ModelSchema } from './model'
 
 const router = new Router()
-const { code, name } = ModelSchema.tree
+const { code, name, image_url } = ModelSchema.tree
 
 router.get('/', query(), list)
 
 router.get('/:id', read)
 
-router.post('/', body({ code, name }), create)
+router.post('/', body({ code, name, image_url }), create)
 
 router.post('/:id/versions', addVersion)
 
