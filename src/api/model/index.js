@@ -26,7 +26,7 @@ router.post('/:id/versions', addVersion)
 
 router.delete('/:id/versions/:version_id', removeVersion)
 
-router.put('/:id', body({ code, name }), update)
+router.put('/:id', body({ code, name, image_url }), update)
 
 router.delete('/:id', destroy)
 
