@@ -16,13 +16,13 @@ import {
 import { VersionSchema } from './model'
 
 const router = new Router()
-const { code, name } = VersionSchema.tree
+const { code, name, image_url } = VersionSchema.tree
 
 router.get('/', query(), list)
 
 router.get('/:id', read)
 
-router.post('/', body({ code, name }), create)
+router.post('/', body({ code, name, image_url }), create)
 
 router.post('/:id/options', addOption)
 
@@ -32,7 +32,7 @@ router.delete('/:id/options/:option_id', removeOption)
 
 router.delete('/:id/colors/:color_id', removeColor)
 
-router.put('/:id', body({ code, name }), update)
+router.put('/:id', body({ code, name, image_url }), update)
 
 router.delete('/:id', destroy)
 

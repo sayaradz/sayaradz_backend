@@ -6,15 +6,15 @@ import { list, read, create, update, destroy } from './controller'
 import { ColorSchema } from './model'
 
 const router = new Router()
-const { code, name } = ColorSchema.tree
+const { code, name, value } = ColorSchema.tree
 
 router.get('/', query(), list)
 
 router.get('/:id', read)
 
-router.post('/', body({ code, name }), create)
+router.post('/', body({ code, name, value }), create)
 
-router.put('/:id', body({ code, name }), update)
+router.put('/:id', body({ code, name, value }), update)
 
 router.delete('/:id', destroy)
 

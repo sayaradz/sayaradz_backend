@@ -13,6 +13,10 @@ const Color = new Schema(
       type: String,
       required: true,
       trim: true
+    },
+    value: {
+      type: String,
+      default: '#000000'
     }
   },
   {

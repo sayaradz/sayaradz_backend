@@ -14,6 +14,10 @@ const Version = new Schema(
       required: true,
       trim: true
     },
+    image_url: {
+      type: String,
+      default: ''
+    },
     options: [
       {
         type: Schema.Types.ObjectId,
