@@ -8,7 +8,8 @@ import {
   update,
   destroy,
   addBrand,
-  removeBrand
+  removeBrand,
+  getUsers
 } from './controller'
 
 import { ManufacturerSchema } from './model'
@@ -23,6 +24,8 @@ router.get('/:id', read)
 router.post('/', body({ code, name }), create)
 
 router.post('/:id/brands', addBrand)
+
+router.get('/:id/users', getUsers)
 
 router.delete('/:id/brands/:brand_id', removeBrand)
 

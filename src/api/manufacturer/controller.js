@@ -1,5 +1,6 @@
 import { success, notFound } from '../../services/response/'
 import Manufacturer from './model'
+const User = require('mongoose').model('User')
 
 export const list = ({ querymen: { query, select, cursor } }, res, next) =>
   Manufacturer.count(query)
@@ -49,6 +50,14 @@ export const removeBrand = ({ params }, res, next) =>
   })
     .then(success(res, 204))
     .catch(next)
+
+export const getUsers = (req, res, next) => {
+  const { id } = req.params
+  User.find({ manufacturers_access: { $all: [id] } })
+    .then(users => users)
+    .then(success(res))
+    .catch(next)
+}
 
 export const update = (
   { bodymen: { body }, params, manufacturer },
