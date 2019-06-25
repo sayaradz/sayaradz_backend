@@ -30,6 +30,8 @@ router.get('/me', token({ required: true }), showMe)
 router.get('/:id', show)
 */
 
+router.get('/:id', show)
+
 router.post('/', body({ email, password, name, picture, role }), create)
 
 router.post('/:id/manufacturers', addManufacturer)

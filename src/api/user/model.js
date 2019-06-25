@@ -5,7 +5,7 @@ import mongoose, { Schema } from 'mongoose'
 import mongooseKeywords from 'mongoose-keywords'
 import { env } from '../../config'
 
-const roles = ['user', 'admin']
+const roles = ['user', 'manufacturer', 'admin']
 
 const userSchema = new Schema(
   {
@@ -36,6 +36,10 @@ const userSchema = new Schema(
       type: String,
       trim: true
     },
+    status: {
+      type: Boolean,
+      default: true
+    },
     manufacturers_access: [
       {
         type: Schema.Types.ObjectId,
@@ -47,7 +51,25 @@ const userSchema = new Schema(
     timestamps: true
   }
 )
+userSchema.methods = {
+  view() {
+    let view = {}
+    let fields = [
+      'id',
+      'name',
+      'picture',
+      'role',
+      'status',
+      'manufacturers_access'
+    ]
 
+    fields.forEach(field => {
+      view[field] = this[field]
+    })
+
+    return view
+  }
+}
 /*
 userSchema.path('email').set(function (email) {
   if (!this.picture || this.picture.indexOf('https://gravatar.com') === 0) {
@@ -73,24 +95,7 @@ userSchema.pre('save', function (next) {
   }).catch(next)
 })
 
-userSchema.methods = {
-  view (full) {
-    let view = {}
-    let fields = ['id', 'name', 'picture']
 
-    if (full) {
-      fields = [...fields, 'email', 'createdAt']
-    }
-
-    fields.forEach((field) => { view[field] = this[field] })
-
-    return view
-  },
-
-  authenticate (password) {
-    return bcrypt.compare(password, this.password).then((valid) => valid ? this : false)
-  }
-}
 
 userSchema.statics = {
   roles,
