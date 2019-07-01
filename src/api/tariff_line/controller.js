@@ -5,7 +5,7 @@ export const list = ({ querymen: { query, select, cursor } }, res, next) =>
   TariffLine.count(query)
     .then(count =>
       TariffLine.find(query, select, cursor)
-        .populate('tariff_type')
+        .populate('tariff_target')
         .then(brands => ({
           rows: brands,
           count

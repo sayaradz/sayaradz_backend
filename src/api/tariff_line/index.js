@@ -7,8 +7,8 @@ import { TariffLineSchema } from './model'
 
 const router = new Router()
 const {
+  tariff_target,
   tariff_type,
-  tariff_type_model,
   d_from,
   d_to,
   price
@@ -20,13 +20,13 @@ router.get('/:id', read)
 
 router.post(
   '/',
-  body({ tariff_type, tariff_type_model, d_from, d_to, price }),
+  body({ tariff_target, tariff_type, d_from, d_to, price }),
   create
 )
 
 router.put(
   '/:id',
-  body({ tariff_type, tariff_type_model, d_from, d_to, price }),
+  body({ tariff_target, tariff_type, d_from, d_to, price }),
   update
 )
 

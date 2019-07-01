@@ -2,11 +2,11 @@ import mongoose, { Schema } from 'mongoose'
 
 const TariffLine = new Schema(
   {
-    tariff_type: {
+    tariff_target: {
       type: Schema.Types.ObjectId,
-      refPath: 'tariff_type_model'
+      refPath: 'tariff_type'
     },
-    tariff_type_model: {
+    tariff_type: {
       type: String,
       enum: ['options', 'colors', 'versions']
     },
@@ -25,6 +25,8 @@ const TariffLine = new Schema(
     timestamps: true
   }
 )
+
+TariffLine.index({ tariff_type: 1, tariff_target: 1 })
 
 const TariffLineModel = mongoose.model('tariff-line', TariffLine)
 
