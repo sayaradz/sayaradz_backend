@@ -9,6 +9,7 @@ import Color from './color'
 import Option from './option'
 import Vehicle from './vehicle'
 import TariffLine from './tariff_line'
+import Order from './order'
 import Command from './command'
 
 const router = new Router()
@@ -49,6 +50,7 @@ router.use('/colors', Color)
 router.use('/options', Option)
 router.use('/vehicles', Vehicle)
 router.use('/tarifflines', TariffLine)
+router.use('/orders', Order)
 router.use('/commands', Command)
 
 export default router

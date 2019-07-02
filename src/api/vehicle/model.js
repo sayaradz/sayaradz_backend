@@ -18,6 +18,10 @@ const Vehicle = new Schema(
     color: {
       type: Schema.Types.ObjectId,
       ref: 'colors'
+    },
+    available: {
+      type: Boolean,
+      default: true
     }
   },
   {
