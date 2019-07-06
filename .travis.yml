@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - v6
+  - v11.6
 addons:
   apt:
     sources:
