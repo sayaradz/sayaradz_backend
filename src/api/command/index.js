@@ -7,7 +7,8 @@ import {
   estimatePrice,
   getAvailableInModels,
   getAvailableInVersions,
-  getAvailableInOptions
+  getAvailableInOptions,
+  getAvailableInColors
 } from './controller'
 
 import { token, local } from '../../services/passport'
@@ -18,6 +19,6 @@ router.get('/estimatePrice', estimatePrice)
 router.get('/brands/:id/models/availables', getAvailableInModels)
 router.get('/models/:id/versions/availables', getAvailableInVersions)
 router.get('/versions/:id/options/availables', getAvailableInOptions)
-router.get('/versions/:id/colors/availables', estimatePrice)
+router.get('/versions/:id/colors/availables', getAvailableInColors)
 
 export default router

@@ -70,14 +70,39 @@ export const getAvailableInVersions = async ({ params: { id } }, res, next) => {
 
 export const getAvailableInOptions = async ({ params: { id } }, res, next) => {
   try {
-    const availableVehicles = await Vehicle.find({ model: id, available: true })
+    const availableVehicles = await Vehicle.find({
+      version: id,
+      available: true
+    })
       .populate({
         path: 'model',
         populate: { path: 'versions', populate: { path: 'options' } }
       })
       .lean()
-    const availableVersions = availableVehicles.map(v => v.model.versions)
-    res.json(availableVersions.flat())
+    const availableOptions = availableVehicles.map(v =>
+      v.model.versions.map(version => version.options)
+    )
+    res.json(availableOptions.flat(2))
+  } catch (err) {
+    next(err)
+  }
+}
+
+export const getAvailableInColors = async ({ params: { id } }, res, next) => {
+  try {
+    const availableVehicles = await Vehicle.find({
+      version: id,
+      available: true
+    })
+      .populate({
+        path: 'model',
+        populate: { path: 'versions', populate: { path: 'colors' } }
+      })
+      .lean()
+    const availableColors = availableVehicles.map(v =>
+      v.model.versions.map(version => version.colors)
+    )
+    res.json(availableColors.flat(2))
   } catch (err) {
     next(err)
   }
