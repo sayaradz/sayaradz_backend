@@ -51,12 +51,18 @@ export const removeBrand = ({ params }, res, next) =>
     .then(success(res, 204))
     .catch(next)
 
-export const getUsers = (req, res, next) => {
+export const getUsers = async (req, res, next) => {
   const { id } = req.params
-  User.find({ manufacturers_access: { $all: [id] } })
-    .then(users => users)
-    .then(success(res))
-    .catch(next)
+  try {
+    console.log(id)
+    const manufacturers = await Manufacturer.find({}).lean()
+    console.log({ manufacturers })
+    const users = await User.find({ manufacturers_access: { $all: [id] } })
+    console.log({ users })
+    res.json(users)
+  } catch (err) {
+    next(err)
+  }
 }
 
 export const update = (
