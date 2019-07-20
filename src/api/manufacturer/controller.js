@@ -57,7 +57,7 @@ export const getUsers = async (req, res, next) => {
     console.log(id)
     const manufacturers = await Manufacturer.find({}).lean()
     console.log({ manufacturers })
-    const users = await User.find({ manufacturers_access: { $all: [id] } })
+    const users = await User.find({ manufacturers_access: id })
     console.log({ users })
     res.json(users)
   } catch (err) {
