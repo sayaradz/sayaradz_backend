@@ -1,5 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import User from './model'
+import Follow from '../follow/model'
+import Notif from '../notification/model'
 import { sign } from '../../services/jwt'
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
@@ -12,6 +14,24 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     )
     .then(success(res))
     .catch(next)
+
+export const followed = followed_type => (
+  { querymen: { query, select, cursor }, params: { id: userId } },
+  res,
+  next
+) => {
+  Follow.count(query)
+    .then(count =>
+      Follow.find({ follower: userId, followed_type }, select, cursor).then(
+        follows => ({
+          rows: follows.map(user => user.view()),
+          count: follows.length
+        })
+      )
+    )
+    .then(success(res))
+    .catch(next)
+}
 
 export const show = ({ params }, res, next) =>
   User.findById(params.id)
@@ -42,6 +62,66 @@ export const create = ({ bodymen: { body } }, res, next) => {
       }
     })
 }
+
+export const follow = followed_type => (req, res, next) => {
+  Follow.create({
+    follower: req.params.id,
+    followed_type,
+    followed: req.body.followed
+  })
+    .then(follow => {
+      res.json(follow)
+    })
+    .catch(err => {
+      res.json({
+        error: true,
+        message: `User has already followed this ${followed_type}`
+      })
+    })
+}
+
+export const unfollow = followed_type => (req, res, next) => {
+  Follow.findOneAndRemove({
+    follower: req.params.id,
+    followed_type,
+    followed: req.params.followed
+  })
+    .then(follow => {
+      res.status(204).send()
+    })
+    .catch(err => {
+      res.json({
+        error: true,
+        message: `User has already unfollowed this ${followed_type}`
+      })
+    })
+}
+
+export const isFollowing = followed_type => async (req, res, next) => {
+  const follow = await Follow.findOne({
+    follower: req.params.id,
+    followed: req.params.followed,
+    followed_type
+  })
+  res.json({
+    following: follow ? true : false
+  })
+}
+
+export const notifications = (
+  { querymen: { query, select, cursor }, params: { id } },
+  res,
+  next
+) =>
+  Notif.count(query)
+    .then(count =>
+      Notif.find({ concern_user: id }, select, cursor).then(notifications => ({
+        count: notifications.length,
+        rows: notifications.map(notification => notification.view())
+      }))
+    )
+    .then(success(res))
+    .catch(next)
 
 export const addManufacturer = (req, res, next) => {
   const { manufacturer_id } = req.body

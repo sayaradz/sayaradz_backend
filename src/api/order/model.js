@@ -14,7 +14,7 @@ const Order = new Schema(
 Order.index({ vehicle: 1 })
 Order.index({ order_date: 1 })
 
-const OrderModel = mongoose.model('ordres', Order)
+const OrderModel = mongoose.model('orders', Order)
 
 export const OrderSchema = OrderModel.schema
 export default OrderModel

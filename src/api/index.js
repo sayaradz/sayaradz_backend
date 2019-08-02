@@ -11,6 +11,8 @@ import Vehicle from './vehicle'
 import TariffLine from './tariff_line'
 import Order from './order'
 import Command from './command'
+import follow from './follow'
+import notification from './notification'
 
 const router = new Router()
 
@@ -52,5 +54,7 @@ router.use('/vehicles', Vehicle)
 router.use('/tarifflines', TariffLine)
 router.use('/orders', Order)
 router.use('/commands', Command)
+router.use('/follows', follow)
+router.use('/notifications', notification)
 
 export default router
