@@ -1,25 +1,33 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema, Types } from 'mongoose'
 
-const notificationSchema = new Schema({
-  message: {
-    type: String
+const notificationSchema = new Schema(
+  {
+    message: {
+      type: String,
+      default: ''
+    },
+    seen: {
+      type: Boolean,
+      default: false
+    },
+    concern_user: {
+      type: Types.ObjectId,
+      model: 'User'
+    }
   },
-  seen: {
-    type: String
-  },
-  concern_user: {
-    type: String
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (obj, ret) => {
+        delete ret._id
+      }
+    }
   }
-}, {
-  timestamps: true,
-  toJSON: {
-    virtuals: true,
-    transform: (obj, ret) => { delete ret._id }
-  }
-})
+)
 
 notificationSchema.methods = {
-  view (full) {
+  view(full) {
     const view = {
       // simple view
       id: this.id,
@@ -30,10 +38,12 @@ notificationSchema.methods = {
       updatedAt: this.updatedAt
     }
 
-    return full ? {
-      ...view
-      // add properties for a full view
-    } : view
+    return full
+      ? {
+          ...view
+          // add properties for a full view
+        }
+      : view
   }
 }
 
