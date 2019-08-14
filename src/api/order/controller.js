@@ -1,5 +1,6 @@
 import { success, notFound } from '../../services/response/'
 import Order from './model'
+import Version from '../version/model'
 
 export const list = ({ querymen: { query, select, cursor } }, res, next) =>
   Order.count(query)
@@ -25,6 +26,29 @@ export const read = ({ params }, res, next) =>
     .populate('user')
     .then(success(res))
     .catch(next)
+
+export const trendingVersions = async ({ params }, res, next) => {
+  try {
+    const orders = await Order.find().populate('version')
+    const orderedVersions = orders.map(order => order.version)
+    const orderedVersionsFrequency = {}
+    orderedVersions.forEach(v => {
+      const versionFrequency = orderedVersionsFrequency[`${v._id}`]
+      orderedVersionsFrequency[`${v._id}`] = versionFrequency
+        ? versionFrequency + 1
+        : 1
+    })
+    let versions = await Version.find({}, '-colors -options').lean()
+    versions = versions.sort((a, b) => {
+      const frequencyA = orderedVersionsFrequency[`${a._id}`] || 0
+      const frequencyB = orderedVersionsFrequency[`${b._id}`] || 0
+      return frequencyB - frequencyA
+    })
+    res.json(versions)
+  } catch (err) {
+    next(err)
+  }
+}
 
 export const create = ({ bodymen: { body } }, res, next) =>
   Order.create(body)

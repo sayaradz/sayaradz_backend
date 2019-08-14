@@ -1,7 +1,14 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
-import { list, read, create, update, destroy } from './controller'
+import {
+  list,
+  read,
+  create,
+  update,
+  destroy,
+  trendingVersions
+} from './controller'
 
 import { OrderSchema } from './model'
 
@@ -11,6 +18,8 @@ const { version, color, options, user, order_date, amount } = OrderSchema.tree
 router.get('/', query(), list)
 
 router.get('/:id', read)
+
+router.get('/trending/versions', trendingVersions)
 
 router.post(
   '/',

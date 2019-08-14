@@ -7,6 +7,13 @@ const Order = new Schema(
     options: [{ type: Schema.Types.ObjectId, ref: 'options' }],
     order_date: { type: Date },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
+    state: {
+      type: String
+    },
+    order_type: {
+      type: String,
+      enum: ['ACCELERATED', 'NORMAL']
+    },
     amount: { type: Number, default: 0 }
   },
   {

@@ -41,7 +41,7 @@ export const estimatePrice = async (
 export const getAvailableInModels = async ({ params: { id } }, res, next) => {
   try {
     const brand = await Brand.findById(id)
-      .populate('models')
+      .populate('models', '-versions')
       .lean()
     const availableVehicles = await Vehicle.find({ available: true })
     const availableVehiclesModels = availableVehicles.map(v =>
@@ -59,7 +59,10 @@ export const getAvailableInModels = async ({ params: { id } }, res, next) => {
 export const getAvailableInVersions = async ({ params: { id } }, res, next) => {
   try {
     const availableVehicles = await Vehicle.find({ model: id, available: true })
-      .populate({ path: 'model', populate: { path: 'versions' } })
+      .populate({
+        path: 'model',
+        populate: { path: 'versions', select: '-colors -options' }
+      })
       .lean()
     const availableVersions = availableVehicles.map(v => v.model.versions)
     res.json(availableVersions.flat())
@@ -76,7 +79,10 @@ export const getAvailableInOptions = async ({ params: { id } }, res, next) => {
     })
       .populate({
         path: 'model',
-        populate: { path: 'versions', populate: { path: 'options' } }
+        populate: {
+          path: 'versions',
+          populate: { path: 'options', select: '-brands' }
+        }
       })
       .lean()
     const availableOptions = availableVehicles.map(v =>
