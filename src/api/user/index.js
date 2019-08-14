@@ -18,6 +18,7 @@ import {
   followed,
   isFollowing,
   notifications,
+  orders,
   update,
   updatePassword,
   destroy
@@ -60,6 +61,8 @@ router.delete('/:id/follows/models/:followed', unfollow('models'))
 router.delete('/:id/follows/versions/:followed', unfollow('versions'))
 
 router.delete('/:id/manufacturers/:manufacturer_id', removeManufacturer)
+
+router.get('/:id/orders', query(), orders)
 
 /*
 router.put('/:id', token({ required: true }), body({ name, picture }), update)

@@ -1,6 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import User from './model'
 import Follow from '../follow/model'
+import Order from '../order/model'
 import Notif from '../notification/model'
 import { sign } from '../../services/jwt'
 
@@ -14,6 +15,27 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     )
     .then(success(res))
     .catch(next)
+
+export const orders = async (
+  { querymen: { query, select, cursor }, params: { id } },
+  res,
+  next
+) => {
+  try {
+    const userOrders = await Order.find({ user: id })
+      .populate('version', '-options -colors')
+      .populate('color')
+      .populate('options', '-brands')
+      .populate('user')
+      .lean()
+    res.json({
+      count: userOrders.length,
+      rows: userOrders
+    })
+  } catch (err) {
+    next(err)
+  }
+}
 
 export const followed = followed_type => (
   { querymen: { query, select, cursor }, params: { id: userId } },

@@ -5,7 +5,10 @@ export const list = ({ querymen: { query, select, cursor } }, res, next) =>
   Order.count(query)
     .then(count =>
       Order.find(query, select, cursor)
-        .populate('vehicle')
+        .populate('version', '-options -colors')
+        .populate('color')
+        .populate('options', '-brands')
+        .populate('user')
         .then(orders => ({
           rows: orders,
           count
@@ -16,7 +19,10 @@ export const list = ({ querymen: { query, select, cursor } }, res, next) =>
 
 export const read = ({ params }, res, next) =>
   Order.findById(params.id)
-    .populate('vehicle')
+    .populate('version', '-options -colors')
+    .populate('color')
+    .populate('options', '-brands')
+    .populate('user')
     .then(success(res))
     .catch(next)
 
