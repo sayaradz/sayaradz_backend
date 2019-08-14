@@ -24,11 +24,7 @@ router.post(
   create
 )
 
-router.put(
-  '/:id',
-  body({ tariff_target, tariff_type, d_from, d_to, price }),
-  update
-)
+router.put('/:id', update)
 
 router.delete('/:id', destroy)
 
