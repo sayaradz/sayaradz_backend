@@ -58,6 +58,7 @@ const notifyUser = async (userId, message) => {
     message,
     concern_user: userId
   }
+  console.log('test')
   await Notif.create(notif)
 }
 export const destroy = ({ params }, res, next) =>
