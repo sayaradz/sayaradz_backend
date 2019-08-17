@@ -47,7 +47,9 @@ export const update = async ({ body, params }, res, next) => {
     if (tariffLine.tariff_type == 'versions') {
       const followedTariffLines = await Follow.find({
         followed: tariffLine.tariff_target._id
-      }).lean()
+      })
+        .populate('follower')
+        .lean()
       const followingUsers = followedTariffLines.map(f => f.follower)
       followingUsers.forEach(
         async user =>
@@ -63,17 +65,17 @@ export const update = async ({ body, params }, res, next) => {
   } catch (err) {}
 }
 
-const notifyUser = async (userId, message) => {
+const notifyUser = async (user, message) => {
   const notif = {
     message,
-    concern_user: userId
+    concern_user: user._id
   }
   const fcmNotif = {
     notification: {
       title: 'New SayaraDZ notification',
       body: notif.message
     },
-    topic: 'highScores'
+    token: user.fcm_id
   }
   admin
     .messaging()

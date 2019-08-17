@@ -55,6 +55,19 @@ export const followed = followed_type => (
     .catch(next)
 }
 
+export const updateFcmId = async ({ params: { id }, body }, res, next) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $set: { fcm_id: body.fcm_id } },
+      { new: true }
+    ).lean()
+    res.json(user)
+  } catch (err) {
+    next(err)
+  }
+}
+
 export const show = ({ params }, res, next) =>
   User.findById(params.id)
     .then(notFound(res))

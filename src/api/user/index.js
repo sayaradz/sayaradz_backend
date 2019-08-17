@@ -19,6 +19,7 @@ import {
   isFollowing,
   notifications,
   orders,
+  updateFcmId,
   update,
   updatePassword,
   destroy
@@ -63,6 +64,8 @@ router.delete('/:id/follows/versions/:followed', unfollow('versions'))
 router.delete('/:id/manufacturers/:manufacturer_id', removeManufacturer)
 
 router.get('/:id/orders', query(), orders)
+
+router.put('/:id/fcm', updateFcmId)
 
 /*
 router.put('/:id', token({ required: true }), body({ name, picture }), update)

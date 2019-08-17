@@ -45,7 +45,11 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'manufacturers'
       }
-    ]
+    ],
+    fcm_id: {
+      type: String,
+      default: ''
+    }
   },
   {
     timestamps: true
