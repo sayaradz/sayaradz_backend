@@ -19,7 +19,6 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
       minlength: 6
     },
     name: {
@@ -47,6 +46,10 @@ const userSchema = new Schema(
       }
     ],
     fcm_id: {
+      type: String,
+      default: ''
+    },
+    firebase_id: {
       type: String,
       default: ''
     }

@@ -9,6 +9,7 @@ import {
 import {
   index,
   showMe,
+  userFirebaseToId,
   show,
   create,
   addManufacturer,
@@ -19,7 +20,7 @@ import {
   isFollowing,
   notifications,
   orders,
-  updateFcmId,
+  updateFirebaseUser,
   update,
   updatePassword,
   destroy
@@ -43,29 +44,50 @@ router.post('/', body({ email, password, name, picture, role }), create)
 
 router.post('/:id/manufacturers', addManufacturer)
 
-router.get('/:id/follows/models', query(), followed('models'))
+router.get('/:id/follows/models', query(), userFirebaseToId, followed('models'))
 
-router.get('/:id/follows/versions', query(), followed('versions'))
+router.get(
+  '/:id/follows/versions',
+  query(),
+  userFirebaseToId,
+  followed('versions')
+)
 
-router.get('/:id/follows/models/:followed', isFollowing('models'))
+router.get(
+  '/:id/follows/models/:followed',
+  userFirebaseToId,
+  isFollowing('models')
+)
 
-router.get('/:id/follows/versions/:followed', isFollowing('versions'))
+router.get(
+  '/:id/follows/versions/:followed',
+  userFirebaseToId,
+  isFollowing('versions')
+)
 
-router.get('/:id/notifications', query(), notifications)
+router.get('/:id/notifications', query(), userFirebaseToId, notifications)
 
-router.post('/:id/follows/models', follow('models'))
+router.post('/:id/follows/models', userFirebaseToId, follow('models'))
 
-router.post('/:id/follows/versions', follow('versions'))
+router.post('/:id/follows/versions', userFirebaseToId, follow('versions'))
 
-router.delete('/:id/follows/models/:followed', unfollow('models'))
+router.delete(
+  '/:id/follows/models/:followed',
+  userFirebaseToId,
+  unfollow('models')
+)
 
-router.delete('/:id/follows/versions/:followed', unfollow('versions'))
+router.delete(
+  '/:id/follows/versions/:followed',
+  userFirebaseToId,
+  unfollow('versions')
+)
 
 router.delete('/:id/manufacturers/:manufacturer_id', removeManufacturer)
 
-router.get('/:id/orders', query(), orders)
+router.get('/:id/orders', query(), userFirebaseToId, orders)
 
-router.put('/:id/fcm', updateFcmId)
+router.put('/firebase_user', updateFirebaseUser)
 
 /*
 router.put('/:id', token({ required: true }), body({ name, picture }), update)

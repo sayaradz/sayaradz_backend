@@ -5,6 +5,18 @@ import Order from '../order/model'
 import Notif from '../notification/model'
 import { sign } from '../../services/jwt'
 
+export const userFirebaseToId = async ({ params }, res, next) => {
+  const user = await User.findOne({ firebase_id: params.id }).lean()
+  if (user) {
+    params.id = user._id
+    next()
+  } else {
+    res.json({
+      error: 'User not found.'
+    })
+  }
+}
+
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   User.count(query)
     .then(count =>
@@ -44,24 +56,23 @@ export const followed = followed_type => (
 ) => {
   Follow.count(query)
     .then(count =>
-      Follow.find({ follower: userId, followed_type }, select, cursor).then(
-        follows => ({
-          rows: follows.map(user => user.view()),
+      Follow.find({ follower: userId, followed_type }, select, cursor)
+        .populate('followed')
+        .then(follows => ({
+          rows: follows.map(follow => follow.followed),
           count: follows.length
-        })
-      )
+        }))
     )
     .then(success(res))
     .catch(next)
 }
 
-export const updateFcmId = async ({ params: { id }, body }, res, next) => {
+export const updateFirebaseUser = async ({ body }, res, next) => {
   try {
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $set: { fcm_id: body.fcm_id } },
-      { new: true }
-    ).lean()
+    let user = await User.findOneAndUpdate({ email: body.email }, body, {
+      new: true
+    }).lean()
+    user = user ? user : await User.create(body)
     res.json(user)
   } catch (err) {
     next(err)
