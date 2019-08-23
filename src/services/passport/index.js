@@ -60,16 +60,15 @@ export const local = () => (req, res, next) => {
     })
   })(req, res, next)
 }
-export const token = ({ required, roles /*= User.roles*/ } = {}) => (
-  req,
-  res,
-  next
-) =>
+export const token = ({
+  required,
+  roles = ['user', 'manufacturer', 'admin']
+} = {}) => (req, res, next) =>
   Passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (
       err ||
-      (required && !user) /*||
-     (required && !~roles.indexOf(user.role))*/
+      (required && !user) ||
+      (required && !~roles.indexOf(user.role))
     ) {
       return res.status(401).end()
     }

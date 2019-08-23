@@ -28,7 +28,7 @@ import {
 import { schema } from './model'
 
 const router = new Router()
-const { email, password, name, picture, role } = schema
+const { email, password, name, picture, role, status } = schema
 
 /*
 router.get('/', token({ required: true, roles: ['admin'] }), query(), index)
@@ -89,9 +89,16 @@ router.get('/:id/orders', query(), userFirebaseToId, orders)
 
 router.put('/firebase_user', updateFirebaseUser)
 
-/*
-router.put('/:id', token({ required: true }), body({ name, picture }), update)
+router.put(
+  '/:id/status',
+  token({ required: true, roles: ['admin'] }),
+  body({ status }),
+  update
+)
 
+router.put('/:id/picture', token({ required: true }), body({ picture }), update)
+
+/*
 router.put('/:id/password', passwordAuth(), body({ password }), updatePassword)
 
 router.delete('/:id', token({ required: true, roles: ['admin'] }), destroy)

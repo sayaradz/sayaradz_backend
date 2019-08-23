@@ -13,7 +13,15 @@ import {
 import { OrderSchema } from './model'
 
 const router = new Router()
-const { version, color, options, user, order_date, amount } = OrderSchema.tree
+const {
+  version,
+  color,
+  options,
+  user,
+  order_date,
+  order_status,
+  amount
+} = OrderSchema.tree
 
 router.get('/', query(), list)
 
@@ -23,13 +31,13 @@ router.get('/trending/versions', trendingVersions)
 
 router.post(
   '/',
-  body({ version, color, options, user, order_date, amount }),
+  body({ version, color, options, user, order_date, order_status, amount }),
   create
 )
 
 router.put(
   '/:id',
-  body({ version, color, options, user, order_date, amount }),
+  body({ version, color, options, user, order_date, order_status, amount }),
   update
 )
 

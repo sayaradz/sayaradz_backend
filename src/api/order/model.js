@@ -7,8 +7,10 @@ const Order = new Schema(
     options: [{ type: Schema.Types.ObjectId, ref: 'options' }],
     order_date: { type: Date },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
-    state: {
-      type: String
+    order_status: {
+      type: String,
+      enum: ['PENDING', 'ACCEPTED', 'REJECTED'],
+      default: 'PENDING'
     },
     order_type: {
       type: String,
