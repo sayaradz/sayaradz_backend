@@ -57,7 +57,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
       next(err)
     })
 
-export const update = ({ bodymen: { body }, params, order }, res, next) => {
+export const update = ({ body, params, order }, res, next) => {
   Order.findByIdAndUpdate(params.id, body)
     .then(success(res))
     .catch(next)

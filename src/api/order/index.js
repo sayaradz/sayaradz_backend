@@ -35,11 +35,7 @@ router.post(
   create
 )
 
-router.put(
-  '/:id',
-  body({ version, color, options, user, order_date, order_status, amount }),
-  update
-)
+router.put('/:id', update)
 
 router.delete('/:id', destroy)
 
