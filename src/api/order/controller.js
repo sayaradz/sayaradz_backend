@@ -57,12 +57,11 @@ export const create = ({ bodymen: { body } }, res, next) =>
       next(err)
     })
 
-export const update = ({ bodymen: { body }, params, order }, res, next) =>
-  Order.findById(params.id)
-    .then(notFound(res))
-    .then(order => (order ? Object.assign(order, body).save() : null))
+export const update = ({ bodymen: { body }, params, order }, res, next) => {
+  Order.findByIdAndUpdate(params.id, body)
     .then(success(res))
     .catch(next)
+}
 
 export const destroy = ({ params }, res, next) =>
   Order.findById(params.id)
