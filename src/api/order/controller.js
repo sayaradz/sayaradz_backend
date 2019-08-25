@@ -1,6 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import Order from './model'
 import Version from '../version/model'
+import User from '../user/model'
 
 export const list = ({ querymen: { query, select, cursor } }, res, next) =>
   Order.count(query)
@@ -50,12 +51,18 @@ export const trendingVersions = async ({ params }, res, next) => {
   }
 }
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = async ({ body }, res, next) => {
+  const { firebase_id } = body
+  if (firebase_id) {
+    const user = await User.findOne({ firebase_id }).lean()
+    body.user = user._id
+  }
   Order.create(body)
     .then(success(res, 201))
     .catch(err => {
       next(err)
     })
+}
 
 export const update = ({ body, params, order }, res, next) => {
   Order.findByIdAndUpdate(params.id, body, { new: true })
