@@ -9,7 +9,7 @@ export const list = ({ querymen: { query, select, cursor } }, res, next) =>
         .populate('version', '-options -colors')
         .populate('color')
         .populate('options', '-brands')
-        .populate('user')
+        .populate('user', '-password')
         .then(orders => ({
           rows: orders,
           count
@@ -23,7 +23,7 @@ export const read = ({ params }, res, next) =>
     .populate('version', '-options -colors')
     .populate('color')
     .populate('options', '-brands')
-    .populate('user')
+    .populate('user', '-password')
     .then(success(res))
     .catch(next)
 
