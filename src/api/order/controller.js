@@ -58,7 +58,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
     })
 
 export const update = ({ body, params, order }, res, next) => {
-  Order.findByIdAndUpdate(params.id, body)
+  Order.findByIdAndUpdate(params.id, body, { new: true })
     .then(success(res))
     .catch(next)
 }
