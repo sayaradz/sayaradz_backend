@@ -28,6 +28,17 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .then(success(res))
     .catch(next)
 
+export const listManufacturers = async ({ params: { id } }, res, next) => {
+  try {
+    const user = (await User.findById(id)
+      .populate('manufacturers_access')
+      .lean()) || { manufacturers_acces: {} }
+    res.json({ manufacturers: user.manufacturers_acces })
+  } catch (err) {
+    next(err)
+  }
+}
+
 export const orders = async (
   { querymen: { query, select, cursor }, params: { id } },
   res,

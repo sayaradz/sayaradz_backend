@@ -8,6 +8,7 @@ import {
 } from '../../services/passport'
 import {
   index,
+  listManufacturers,
   showMe,
   userFirebaseToId,
   show,
@@ -26,6 +27,7 @@ import {
   destroy
 } from './controller'
 import { schema } from './model'
+import { list } from '../order/controller'
 
 const router = new Router()
 const { email, password, name, picture, role, status } = schema
@@ -37,6 +39,7 @@ router.get('/', query(), index)
 router.get('/:id', show)
 */
 
+router.get('/:id/manufacturers', listManufacturers)
 router.get('/:id', show)
 
 router.post('/', body({ email, password, name, picture, role }), create)
