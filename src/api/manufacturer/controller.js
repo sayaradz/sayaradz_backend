@@ -78,9 +78,14 @@ export const update = (
     .then(success(res))
     .catch(next)
 
-export const destroy = ({ params }, res, next) =>
+export const destroy = async ({ params }, res, next) => {
+  const adminUser = await User.update(
+    { manufacturers_access: params.id },
+    { $pull: { manufacturers_access: params.id } }
+  ).lean()
   Manufacturer.findById(params.id)
     .then(notFound(res))
     .then(manufacturer => (manufacturer ? manufacturer.remove() : null))
     .then(success(res, 204))
     .catch(next)
+}
