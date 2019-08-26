@@ -30,10 +30,9 @@ import { schema } from './model'
 const router = new Router()
 const { email, password, name, picture, role, status } = schema
 
-/*
-router.get('/', token({ required: true, roles: ['admin'] }), query(), index)
+router.get('/', query(), index)
 
-router.get('/me', token({ required: true }), showMe)
+/*router.get('/me', token({ required: true }), showMe)
 
 router.get('/:id', show)
 */
