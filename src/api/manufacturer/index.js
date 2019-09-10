@@ -3,6 +3,7 @@ import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import {
   list,
+  vehicles,
   read,
   create,
   update,
@@ -32,5 +33,7 @@ router.delete('/:id/brands/:brand_id', removeBrand)
 router.put('/:id', body({ code, name }), update)
 
 router.delete('/:id', destroy)
+
+router.get('/:id/vehicles', vehicles)
 
 export default router

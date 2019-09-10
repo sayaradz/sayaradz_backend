@@ -1,5 +1,9 @@
 import { success, notFound } from '../../services/response/'
 import Manufacturer from './model'
+import Brand from '../brand/model'
+import Model from '../model/model'
+import Vehicle from '../vehicle/model'
+
 const User = require('mongoose').model('User')
 
 export const list = ({ querymen: { query, select, cursor } }, res, next) =>
@@ -14,6 +18,24 @@ export const list = ({ querymen: { query, select, cursor } }, res, next) =>
     )
     .then(success(res))
     .catch(next)
+
+export const vehicles = async (req, res, next) => {
+  try {
+    const manufacturer = await Manufacturer.findById(req.params.id).lean()
+    const brands = await Brand.find({
+      _id: { $in: manufacturer.brands }
+    }).lean()
+    const models = brands.map(b => b.models).flat()
+    const vehicles = await Vehicle.find({ model: { $in: models } })
+      .populate('model')
+      .populate('version')
+      .populate('color')
+      .lean()
+    res.json(vehicles)
+  } catch (err) {
+    next(err)
+  }
+}
 
 export const read = ({ params }, res, next) =>
   Manufacturer.findById(params.id)
