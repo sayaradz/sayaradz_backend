@@ -2,6 +2,7 @@ import { success, notFound } from '../../services/response/'
 import Order from './model'
 import Version from '../version/model'
 import User from '../user/model'
+import TariffLine from '../tariff_line/model'
 import { Types } from 'mongoose'
 
 export const list = ({ querymen: { query, select, cursor } }, res, next) =>
