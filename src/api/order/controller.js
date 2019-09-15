@@ -58,7 +58,7 @@ export const create = async ({ body }, res, next) => {
     const user = await User.findOne({ firebase_id }).lean()
     body.user = user._id
   }
-  const { version, color, options = '' } = body
+  let { version, color, options = '' } = body
   version = Types.ObjectId.isValid(version) ? version : null
   color = Types.ObjectId.isValid(color) ? color : null
   options = options.split(',').filter(o => Types.ObjectId.isValid(o))
