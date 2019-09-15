@@ -68,7 +68,7 @@ export const followed = followed_type => (
   Follow.count(query)
     .then(count =>
       Follow.find({ follower: userId, followed_type }, select, cursor)
-        .populate('followed')
+        .populate({ path: 'followed', select: '-colors -versions -options' })
         .then(follows => ({
           rows: follows.map(follow => follow.followed),
           count: follows.length
