@@ -16,6 +16,7 @@ const TariffLine = new Schema(
     d_to: {
       type: Date
     },
+    quantity: { type: Number, default: 0 },
     price: {
       type: Number,
       default: 0

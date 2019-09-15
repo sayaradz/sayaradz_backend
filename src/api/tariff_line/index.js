@@ -11,6 +11,7 @@ const {
   tariff_type,
   d_from,
   d_to,
+  quantity,
   price
 } = TariffLineSchema.tree
 
@@ -20,7 +21,7 @@ router.get('/:id', read)
 
 router.post(
   '/',
-  body({ tariff_target, tariff_type, d_from, d_to, price }),
+  body({ tariff_target, tariff_type, d_from, d_to, quantity, price }),
   create
 )
 
