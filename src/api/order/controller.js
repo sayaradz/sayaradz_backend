@@ -34,6 +34,7 @@ export const trendingVersions = async ({ params }, res, next) => {
     const orderedVersions = orders.map(order => order.version)
     const orderedVersionsFrequency = {}
     orderedVersions.forEach(v => {
+      console.log(v)
       const versionFrequency = orderedVersionsFrequency[`${v._id}`]
       orderedVersionsFrequency[`${v._id}`] = versionFrequency
         ? versionFrequency + 1
