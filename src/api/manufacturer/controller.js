@@ -3,6 +3,7 @@ import Manufacturer from './model'
 import Brand from '../brand/model'
 import Model from '../model/model'
 import Vehicle from '../vehicle/model'
+import TariffLine from '../tariff_line/model'
 
 const User = require('mongoose').model('User')
 
@@ -32,6 +33,25 @@ export const vehicles = async (req, res, next) => {
       .populate('color')
       .lean()
     res.json(vehicles)
+  } catch (err) {
+    next(err)
+  }
+}
+
+export const tarifflines = async (req, res, next) => {
+  try {
+    const manufacturer = await Manufacturer.findById(req.params.id).lean()
+    const brands = await Brand.find({
+      _id: { $in: manufacturer.brands }
+    }).lean()
+    const models = brands.map(b => b.models).flat()
+    const versions = models.map(m => m.versions)
+    const options = versions.map(v => v.options)
+    const colors = versions.map(v => v.colors)
+    const tarifflines = await TariffLine.find({
+      tariff_target: { $in: [...versions, ...colors, ...options] }
+    })
+    res.json(tarifflines)
   } catch (err) {
     next(err)
   }

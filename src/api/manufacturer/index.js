@@ -4,6 +4,7 @@ import { middleware as body } from 'bodymen'
 import {
   list,
   vehicles,
+  tarifflines,
   read,
   create,
   update,
@@ -35,5 +36,7 @@ router.put('/:id', body({ code, name }), update)
 router.delete('/:id', destroy)
 
 router.get('/:id/vehicles', vehicles)
+
+router.get('/:id/tarifflines', tarifflines)
 
 export default router
