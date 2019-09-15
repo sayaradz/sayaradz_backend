@@ -43,13 +43,17 @@ export const tarifflines = async (req, res, next) => {
     const manufacturer = await Manufacturer.findById(req.params.id).lean()
     const brands = await Brand.find({
       _id: { $in: manufacturer.brands }
-    }).lean()
+    })
+      .populate({ path: 'models', populate: { path: 'versions' } })
+      .lean()
     const models = brands.map(b => b.models).flat()
     const versions = models.map(m => m.versions)
     const options = versions.map(v => v.options)
     const colors = versions.map(v => v.colors)
     const tarifflines = await TariffLine.find({
-      tariff_target: { $in: [...versions, ...colors, ...options] }
+      tariff_target: {
+        $in: [...versions.map(v => v._id), ...colors, ...options]
+      }
     })
     res.json(tarifflines)
   } catch (err) {
