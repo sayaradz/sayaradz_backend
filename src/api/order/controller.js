@@ -58,6 +58,23 @@ export const create = async ({ body }, res, next) => {
     const user = await User.findOne({ firebase_id }).lean()
     body.user = user._id
   }
+  const { version, color, options = '' } = body
+  version = Types.ObjectId.isValid(version) ? version : null
+  color = Types.ObjectId.isValid(color) ? color : null
+  options = options.split(',').filter(o => Types.ObjectId.isValid(o))
+  options = options.length > 0 ? options : null
+  const tariffs = await TariffLine.find({
+    $or: [
+      { tariff_type: 'versions', tariff_target: version },
+      { tariff_type: 'colors', tariff_target: color },
+      { tariff_type: 'options', tariff_target: { $in: options } }
+    ]
+  }).lean()
+  const totalPrice = tariffs.reduce(
+    (total, current) => total + current.price,
+    0
+  )
+  body.amount = totalPrice
   Order.create(body)
     .then(success(res, 201))
     .catch(err => {
